@@ -4,16 +4,16 @@ import os
 import pandas as pd
 
 # Sidebar: API Key input
-st.sidebar.title("Configuration")
+st.sidebar.title("GROQ API ONLY")
 api_key = st.sidebar.text_input("Enter your API Key", type="password")
 if api_key:
     os.environ["GROQ_API_KEY"] = api_key
 
 # Main interface
-st.title("Simple Streamlit App")
+st.title("ICD Code Detector")
 
 # Input field
-user_input = st.text_area("Enter your input:")
+user_input = st.text_area("Enter Doctor's Note")
 
 # Run button
 if st.button("Run"):
@@ -25,20 +25,11 @@ if st.button("Run"):
         # Simulate processing
         # output = f"### Output\n\nYou entered:\n\n```\n{user_input}\n```"
         output = end_to_end(user_input)
-#         output = eval("""
-# [('M12822',
-#   10,
-#   'Other specific arthropathies, not elsewhere classified, left elbow'),
-#  ('G562', 10, 'Lesion of ulnar nerve'),
-#  ('S53094', 10, 'Other dislocation of right radial head')]
-# """)
+
         df = pd.DataFrame(output)
         df.columns = ["ICD Code", "ICD Version", "ICD Description"]
 
         st.dataframe(df)
-
-        # Show output in markdown
-        # st.markdown(output)
 
         # Additional content inside expander
         with st.expander("See more details"):
